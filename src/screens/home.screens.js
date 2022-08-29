@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Text, View, StyleSheet, SafeAreaView, Platform, StatusBar, FlatList, TouchableHighlight } from "react-native"
 import { RenderItem } from '../components/listRender.components'
 import { Ionicons } from '@expo/vector-icons';
+import { UserContext } from '../serivces/user.services';
 
 export const HomeScreen = () => {
 
@@ -25,6 +26,8 @@ export const HomeScreen = () => {
         }
     ]
 
+    const { setUser } = useContext(UserContext)
+
     return (
         <SafeAreaView style={styles.Container}>
             <View style={{ flexDirection: "row" }}>
@@ -38,6 +41,9 @@ export const HomeScreen = () => {
                 renderItem={(item) => <RenderItem item={item} />}
                 keyExtractor={item => item.room}
             />
+            <TouchableHighlight onPress={() => { setUser(null) }}>
+                <Text style={styles.Logout}>Log Out</Text>
+            </TouchableHighlight>
         </SafeAreaView>
     )
 }
@@ -67,5 +73,15 @@ const styles = StyleSheet.create({
         paddingTop: 12,
         paddingLeft: 16
 
+    },
+    Logout: {
+        textAlign: "center",
+        backgroundColor: "rgb(20,20,20)",
+        color: "rgb(140, 140, 140)",
+        marginHorizontal: 128,
+        padding: 10,
+        borderRadius: 8,
+        fontSize: 20,
+        marginBottom: 80
     }
 })
